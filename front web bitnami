@@ -1,0 +1,471 @@
+
+<!DOCTYPE html>
+<html class="authenticated" lang="en-US" ng-app="launchpad" ng-controller="LaunchpadController" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Bitnami Google Cloud Platform Launchpad</title>
+<meta charset="utf-8">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="/assets/favicon-2324452a19e628e2dcea87bab6d350ae.png" rel="shortcut icon">
+<link rel="stylesheet" media="all" href="/assets/application_google-30f26526165c390162adfdf0af796e62.css" />
+<script src="/assets/vendor/modernizr-e3c67fc65b84e349bff6a91cf74d2126.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="7HDuJdCot031/8d0PfwcF7zUFVN70VYyGb0Usv0CMjaqLpNPo/JKVBwEIbCIg+DVeikWyvEEqcObI3JaO87ppg==" />
+<script>
+  WebFontConfig = {};
+</script>
+<script>
+  WebFontConfig.google = {
+    families: [ 'Roboto:400,300,500:latin' ]
+  }
+</script>
+<script>
+  WebFont.load(WebFontConfig);
+</script>
+<script>
+//<![CDATA[
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-1874455-2', 'auto');
+      ga('send', 'pageview');
+
+//]]>
+</script>
+<script type="text/javascript"> 
+  var _veroq = _veroq || [];
+  _veroq.push(['init', { api_key: '6b05a0160d3124bb9b50b8f8397d8424d033531e' } ]);
+  _veroq.push(['trackPageview']);
+  (function() {var ve = document.createElement('script'); ve.type = 'text/javascript'; ve.async = true; ve.src = '//d3qxef4rp70elm.cloudfront.net/m.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ve, s);})(); 
+</script>
+
+
+</head>
+<body class="virtual_machines show" data-return-to="/vms/bitnami-reviewboard-1bda">
+<div class="fixed">
+<nav class="top-bar" data-topbar>
+<ul class="title-area">
+<li class="name">
+<h1 id="logo">
+<a href="/"><img data-at2x="/assets/logo@2x-23edf08eb4cfcb0fc5d2afcb67290571.png" src="/assets/logo-18eb834e60be3108c6bbfd04e68d58b2.png" alt="Logo" />
+<span class="text">
+Bitnami Launchpad
+<span>
+for
+<span>Google Cloud Platform</span>
+</span>
+</span>
+</a></h1>
+</li>
+<li class="toggle-topbar menu-icon">
+<a href="#"><span></span>
+</a></li>
+</ul>
+<section class="top-bar-section">
+<ul class="right">
+<li class="ng-cloak status-link" ng-if="meta.status_info">
+<a ng-click="loadStatusModal()" href=""><span class="fa fa-exclamation-triangle">
+Platform status
+</span>
+</a></li>
+<li class="active"><a href="/vms">Virtual Machines</a></li>
+<li><a href="/">Library</a></li>
+<li>
+<a href="https://bitnami.com/support/google">Support</a>
+</li>
+<li class="has-dropdown">
+<a href="/account">Account</a>
+<ul class="dropdown">
+<div class="arrow-up"></div>
+<li><a href="/services">Cloud credentials</a></li>
+<li><a href="/account">Profile</a></li>
+<li><a rel="nofollow" data-method="delete" href="/signout">Sign out</a></li>
+</ul>
+</li>
+</ul>
+</section>
+</nav>
+</div>
+<div id="outer-wrapper">
+<div class="loading-overlay" ng-class="{loading: isApplicationLoading}" ng-hide="!isApplicationLoading">
+<div class="loading-message text-center">
+<h2>Loading</h2>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<div id="wrapper">
+<div class="row">
+<div class="medium-12 columns">
+
+</div>
+</div>
+<div class="virtual-machine" data-id="zgCngL8" data-service-id="vRbHZx8" ng-cloak ng-controller="VirtualMachineController" ng-show="!!virtualMachine">
+<div class="row">
+<header class="google">
+<div class="small-12 columns">
+<div class="alert-box" ng-if="virtualMachine.state_info">
+{{virtualMachine.state_info}}
+</div>
+</div>
+<div class="medium-7 columns c-vm-display_name">
+<h1 editable-text="virtualMachine.display_name" ng-if="meta.controls.vmshow_show_name_edit &amp;&amp; virtualMachine.hasBeenCreated()">
+{{virtualMachine.display_name | truncate:25 }}
+<i class="fa fa-pencil c-vm-edit_display_name"></i>
+</h1>
+<h1 ng-if="!meta.controls.vmshow_show_name_edit || !virtualMachine.hasBeenCreated()">
+{{virtualMachine.display_name | truncate:25 }}
+</h1>
+<div ng-if="virtualMachine.current_operation">
+<p class="operation">
+<i class="spinner fa fa-refresh fa-spin"></i>
+{{virtualMachine.current_operation.label}}: {{currentStepName(virtualMachine.current_operation)}}
+{{(virtualMachine.current_operation.progress | number:0) || 0}}%
+</p>
+<p class="operation-message" ng-if="virtualMachine.current_operation.message">
+{{ virtualMachine.current_operation.message }}
+</p>
+</div>
+<div ng-if="lastOperationFailed()">
+<p class="operation">
+Last operation failed ({{virtualMachine.last_operation.label}})
+</p>
+<p class="operation-message alert" ng-if="lastOperationFailed()">
+{{ virtualMachine.last_operation.failure_cause }}
+</p>
+</div>
+</div>
+<div class="medium-5 columns">
+<div ng-if="virtualMachine.isRunning() || virtualMachine.isStopped()">
+<a class="button button-outline c-vm-manage_link c-vm-manage_url platform" ng-href="{{virtualMachine.manage_url}}" ng-if="!virtualMachine.demo &amp;&amp; virtualMachine.manage_url" target="_blank">
+Manage in the {{ virtualMachine.platform }} Console
+</a>
+<span class="duration" ng-if="virtualMachine.demo">
+<h3>Demo server</h3>
+<span ng-if="demo_remaining_time &gt; 60">
+{{demo_remaining_time / 60 | number:0}} minutes remaining
+</span>
+<span ng-if="demo_remaining_time &lt; 60">Will expire in less than a minute</span>
+</span>
+</div>
+</div>
+<div class="small-12 columns">
+<hr>
+</div>
+</header>
+</div>
+<div class="row">
+<div class="application-info">
+<h2>Application Info</h2>
+<div class="panel">
+<div class="image-info">
+<div class="image">
+<img alt="{{virtualMachine.image.name}}" data-no-retina ng-src="{{virtualMachine.image.image_url}}" width="75">
+</div>
+<div class="info">
+<h3>
+{{virtualMachine.image.name}}
+<span>{{virtualMachine.image.version}}</span>
+</h3>
+<p>
+{{virtualMachine.image.description | words: 20}}
+<a class="label radius secondary c-vm-bitnami_link" ng-href="{{virtualMachine.image.url}}" target="_blank">
+<i class="fa fa-external-link"></i>
+Learn More
+</a>
+</p>
+<p ng-if="virtualMachine.image.license_description">
+{{virtualMachine.image.license_description}}
+</p>
+</div>
+</div>
+<ul class="property-list" ng-if="virtualMachine.image.trial_post_signup_message &amp;&amp; !virtualMachine.demo">
+<li>
+<div class="key">
+<i class="fa fa-certificate"></i>
+<div class="hidden">Trial Info</div>
+</div>
+<div class="value">
+TRIAL INFO
+<div class="trial-info">{{virtualMachine.image.trial_post_signup_message}}</div>
+</div>
+</li>
+</ul>
+<ul class="property-list" ng-if="virtualMachine.isRunning()">
+<li ng-if="virtualMachine.hasURL()">
+<div class="key">
+<i class="fa fa-cogs"></i>
+<div class="hidden">Application</div>
+</div>
+<div class="value">
+<a class="tiny button c-vm-application_link" ng-href="http://{{virtualMachine.dns_name}}/" target="_blank">
+GO TO APPLICATION
+</a>
+<div class="small">Launches in a new window</div>
+</div>
+</li>
+<li ng-if="virtualMachine.hasAdminURL()">
+<div class="key">
+<i class="fa fa-wrench"></i>
+<div class="hidden">Administration</div>
+</div>
+<div class="value">
+<a class="tiny button c-vm-admin_link" ng-href="{{virtualMachine.admin_url}}" target="_blank">
+GO TO ADMINISTRATION
+</a>
+<div class="small">Launches in a new window</div>
+</div>
+</li>
+</ul>
+<ul class="property-list">
+<li ng-if="virtualMachine.credentials.default_password || virtualMachine.credentials.default_username">
+<div class="key">
+<i class="fa fa-key"></i>
+<div class="hidden">Credentials</div>
+</div>
+<div class="value">
+CREDENTIALS
+<span class="help-icon" mac-popover="credentialInformationPopover" ng-if="virtualMachine.image.credential_information"></span>
+<mac-popover id="credentialInformationPopover">
+{{ virtualMachine.image.credential_information }}
+</mac-popover>
+<credentials credentials="virtualMachine.credentials" image="virtualMachine.image"></credentials>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="server-info">
+<span class="status {{virtualMachine.state}} right">
+{{virtualMachine.state_name}}
+<time am-time-ago="virtualMachine.updated_at" ng-if="!virtualMachine.current_operation"></time>
+</span>
+<h2>Server Info</h2>
+<div class="panel">
+<div class="image-info">
+<div class="image">
+<img data-at2x="/assets/google-server@2x-756ab5b9cc02c1c94bf13eca80abfeee.png" src="/assets/google-server-6764575b3c9ca90215425605db55e211.png" alt="Google server" />
+</div>
+<div class="info" ng-if="virtualMachine.isRunning()">
+<h3 class="c-vm-dns_information" ng-bind-html="virtualMachine.shownIpAddressLink() || 'IP address not available'"></h3>
+<div class="label" ng-if="!virtualMachine.public_ip_address &amp;&amp; virtualMachine.private_ip_address">Internal IP address</div>
+<p ng-if="virtualMachine.hasDNS()">
+{{virtualMachine.dns_name}}
+</p>
+</div>
+</div>
+<ul class="property-list">
+<li class="c-vm-private_ip_info" ng-if="meta.controls.vmshow_show_private_ip &amp;&amp; virtualMachine.private_ip_address">
+<div class="key">
+<i class="fa fa-cog"></i>
+</div>
+<div class="value">
+{{virtualMachine.private_ip_address}}
+<div class="small">
+Internal IP Address
+</div>
+</div>
+</li>
+<li ng-if="meta.controls.vmshow_show_os">
+<div class="key">
+<i class="fa fa-linux"></i>
+<div class="hidden">Operating system</div>
+</div>
+<div class="value">
+{{virtualMachine.image.os_name}}
+<div class="small">OPERATING SYSTEM</div>
+</div>
+</li>
+<li class="c-vm-server_type_info" ng-if="meta.controls.vmshow_show_instance_type">
+<div class="key">
+<i class="fa fa-sliders"></i>
+<div class="hidden">Machine</div>
+</div>
+<div class="value">
+<mac-popover id="instanceSizePopover">{{virtualMachine.instance_cost.description}}</mac-popover>
+{{virtualMachine.size | upcase}}
+<div class="small" ng-if="meta.controls.vmshow_show_instance_cost &amp;&amp; virtualMachine.instance_cost">
+{{virtualMachine.instance_cost.cost_per_month | currency:priceUnit()}}/mo
+({{virtualMachine.instance_cost.unit}}
+{{virtualMachine.instance_cost.cost_per_hour | number:3}}/hr)
+<span class="help-icon" mac-popover-trigger="hover" mac-popover="instanceSizePopover"></span>
+</div>
+</div>
+</li>
+<li class="c-vm-disk_type_info" ng-if="meta.controls.vmshow_show_instance_storage">
+<div class="key">
+<i class="fa fa-database"></i>
+<div class="hidden">Storage</div>
+</div>
+<div class="value">
+{{virtualMachine.storage_type | upcase}}
+<div class="small">
+{{virtualMachine.disk_size}} Gb
+<span ng-if="virtualMachine.instance_cost.cost_storage_month">
+({{virtualMachine.instance_cost.cost_storage_month | currency:priceUnit()}}/mo)
+</span>
+</div>
+</div>
+</li>
+<li class="c-vm-memory_info" ng-if="meta.controls.vmshow_show_memory">
+<div class="key">
+<i class="fa fa-hdd-o"></i>
+<div class="hidden">Memory</div>
+</div>
+<div class="value">
+{{virtualMachine.memory | megabytes:0}}
+<div class="small">
+memory
+<span ng-if="virtualMachine.instance_cost.cost_memory_month">
+({{virtualMachine.instance_cost.cost_memory_month | currency}}/mo)
+</span>
+</div>
+</div>
+</li>
+<li class="c-vm-num_cpus" ng-if="meta.controls.vmshow_show_cpus">
+<div class="key">
+<i class="fa fa-cogs"></i>
+<div class="hidden">CPUs</div>
+</div>
+<div class="value">
+{{virtualMachine.num_cpus}}
+<div class="small">
+CPUS
+<span ng-if="virtualMachine.instance_cost.cost_cpu_month">
+({{virtualMachine.instance_cost.cost_cpu_month | currency}}/mo)
+</span>
+</div>
+</div>
+</li>
+<li class="c-vm-network_info" ng-if="virtualMachine.network_info">
+<div class="key">
+<i class="fa fa-sitemap"></i>
+</div>
+<div class="value">
+{{ virtualMachine.network_info.name | upcase }}
+<div class="small">
+{{ virtualMachine.network_info.label }}
+<custom-tooltip tooltip-id="network_info" tooltip-text="virtualMachine.network_info.description"></custom-tooltip>
+</div>
+</div>
+</li>
+<li class="c-vm-region_info" ng-if="meta.controls.vmshow_show_region">
+<div class="key">
+<i class="fa fa-map-marker"></i>
+<div class="hidden">Region</div>
+</div>
+<div class="value">
+{{virtualMachine.region_id | upcase}}
+<div class="small">Region</div>
+</div>
+</li>
+<li class="c-vm-vdc_name" ng-if="meta.controls.vmshow_show_vdc_name">
+<div class="key">
+<i class="fa fa-server"></i>
+<div class="hidden">Virtual Data Center</div>
+</div>
+<div class="value">
+{{virtualMachine.vmware_vdc_name | upcase}}
+<div class="small">Virtual Data Center (VDC)</div>
+</div>
+</li>
+<li class="c-vm-estimated_cost" ng-if="meta.controls.vmshow_show_instance_cost">
+<div class="key">
+<i class="fa fa-dollar"></i>
+<div class="hidden">Cost</div>
+</div>
+<div class="value">
+{{ virtualMachine.instance_cost.total_per_month | currency:priceUnit()}}
+<div class="small">
+Estimated monthly cost
+<custom-tooltip tooltip-id="total_price_popover" tooltip-text="tooltips.vm_total_price"></custom-tooltip>
+</div>
+</div>
+</li>
+<li class="c-vm-ssh_information" ng-if="meta.controls.vmshow_show_ssh_details &amp;&amp; !virtualMachine.demo">
+<div class="key">
+<i class="fa fa-terminal"></i>
+<div class="hidden">SSH Credentials</div>
+</div>
+<div class="value" ng-switch on="virtualMachine.connection_type">
+<div ng-if="!virtualMachine.isRunning()">
+CONNECTION NOT AVAILABLE
+</div>
+<div ng-switch-when="ssh_key">
+<a class="tiny button" ng-click="virtualMachine.openConsole()" ng-if="virtualMachine.ssh_console_url">
+Launch SSH Console
+</a>
+<div class="small download-key-list">
+Download Key:
+<ul class="key-list">
+<li>
+<a ng-href="{{virtualMachine.ssh_keys.pem}}">
+<i class="fa fa-key"></i>
+.pem
+</a>
+</li>
+<li>
+<a ng-href="{{virtualMachine.ssh_keys.ppk}}">
+<i class="fa fa-key"></i>
+.ppk
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div ng-switch-when="ssh_password">
+<credentials credentials="{ default_username: virtualMachine.ssh_user, default_password: virtualMachine.ssh_password }"></credentials>
+</div>
+<section class="c-vm-ssh-command" ng-if="virtualMachine.isRunning()">
+<a class="show-command-toggle" ng-toggle="ssh_command_shown">
+<span ng-if="!ssh_command_shown">Show SSH command</span>
+<span ng-if="ssh_command_shown">Hide SSH command</span>
+</a>
+<pre ng-show="ssh_command_shown &amp;&amp; virtualMachine.ssh_unix_cmd"><code>{{virtualMachine.ssh_unix_cmd}}</code></pre>
+</section>
+</div>
+</li>
+<li ng-if="!virtualMachine.demo">
+<div class="medium-12 columns">
+<virtual-machine-additional-attributes attributes="virtualMachine.additional_attributes"></virtual-machine-additional-attributes>
+</div>
+</li>
+<li ng-if="!virtualMachine.demo &amp;&amp; virtualMachine.state != 'deleted'">
+<div class="medium-12 columns">
+<div class="alert-box" ng-if="quotaExceeded">
+Not enough CPUs available to start this server. Try shutting down or deleting unused virtual machines.
+</div>
+<virtual-machine-controls ng-if="!platform('azure') || virtualMachine.type != 'AzureVirtualMachine'"></virtual-machine-controls>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div class="row">
+<div class="small-12 columns">
+<ul class="inline-list">
+<li>&copy; Bitnami 2020.</li>
+<li>
+<a target="_blank" rel="noreferrer noopener" href="https://www.vmware.com/help/privacy.html">Privacy Policy</a>
+</li>
+<li>
+<a target="_blank" rel="noreferrer noopener" href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a>
+</li>
+</ul>
+</div>
+</div>
+</footer>
+</div>
+</div>
+<script id="metadata" type="application/json">{"controls":{"vmnew_os":false,"vmnew_memory":false,"vmnew_num_cpus":false,"vmnew_network":true,"vmnew_network_public_connection_selector":false,"vmnew_vdc":false,"vmnew_region":true,"vmnew_server_type":true,"vmnew_server_type_description_visible":false,"vmnew_server_type_price_visible":true,"vmnew_disk_size":true,"vmnew_disk_type":true,"vmnew_pricing":true,"vmshow_show_instance_type":true,"vmshow_show_instance_storage":true,"vmshow_show_region":true,"vmshow_show_instance_cost":true,"vmshow_show_ssh_details":true,"vmshow_show_memory":false,"vmshow_show_cpus":false,"vmshow_show_vdc_name":false,"vmshow_show_private_ip":false,"vmshow_show_name_edit":true,"vmshow_show_os":false,"vmshow_can_reboot":true,"vmnew_region_selector":true},"messages":{"tooltips":{"vm_new_server_type":"Move the slider the adjust the size of your instance. \u003ca href='https://developers.google.com/compute/docs/machine-types' target='_blank'\u003eMore details \u0026rsaquo;\u003c/a\u003e","vm_new_image":"Choose from over 110+ open source applications.","vm_new_disk_size":"{{diskSizeUsage}} GB of {{diskSizeLimit}} GB used in in {{vm.region.name}}","vm_new_static_disk_size":"Select the size for your SSD disk","lack_of_demo_resources":"Currently there are no available resources to run a 1-hour demo. Please try again later.","vm_new_disk_type":"Choose from Solid-state (SSD) or regular Magnetic disk storage. \u003ca href='https://developers.google.com/compute/docs/disks' target='_blank'\u003eMore details \u0026rsaquo;\u003c/a\u003e","vm_new_region":"Use the map to select a location. \u003ca href='https://developers.google.com/compute/docs/zones' target='_blank'\u003eMore details \u0026rsaquo;\u003c/a\u003e","vm_new_total_price":"The monthly cost is an estimation of one month of sustained use. \u003ca href='https://developers.google.com/compute/pricing#sustained_use' target='_blank'\u003eMore details \u0026rsaquo;\u003c/a\u003e"}},"platform":"google"}</script>
+<script src="/assets/application-7f3aa2b75bf2d5db4d0e2aa03870e771.js"></script>
+</body>
+</html>
